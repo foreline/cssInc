@@ -15,6 +15,18 @@ Which will output:
 
 where 1421404145 if file mtime stamp. Keeping sure changes will miss browser cache.
 
-The following rule should be added to .htaccess file:
+The following rule should be added to apache .htaccess file:
 
-    RewriteRule ^(.*)\.[\d]{10}\.(css|js)$ $1.$2 [L]
+    # apache confiruration
+    <IfModule mod_rewrite.c>
+	    Options +FollowSymLinks
+	    RewriteEngine On
+        RewriteRule ^(.*)\.[\d]{10}\.(css|js)$ $1.$2 [L]
+    </IfModule>
+
+or to ngingx nginx.conf file:
+
+    # nginx configuration
+    location / {
+        rewrite "^/(.*)\.[\d]{10}\.(css|js)$" /$1.$2 break;
+    }
